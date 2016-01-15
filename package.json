@@ -9,7 +9,7 @@
   "author": "webyTom",
   "license": "ISC",
   "devDependencies": {
-    "angular": "^1.4.8",
-    "angular-route": "^1.4.8"
+    "ejs": "^2.3.4",
+    "express": "^4.13.3"
   }
 }
