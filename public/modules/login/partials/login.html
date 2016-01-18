@@ -2,5 +2,6 @@
     <form name="loginForm" ng-submit="login()">
         <input type="text" name="loginInput" ng-model="user.login">
         <input type="submit" value="dołącz">
+        <span class="login-box-message">{{loginErrorMessage}}</span>
     </form>
 </div>

@@ -1,6 +1,27 @@
+/* temporary styles */
+
 .login-box {
     width: 200px;
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%,-50%);
 }
 
+.login-box input[name="loginInput"] {
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    width: calc(100% - 60px);
+}
+
+.login-box input[type="submit"] {
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    width: 60px;
+}
+
+.login-box .login-box-message {
+    width: 100%;
+    clear: both;
+    color: red;
+}
