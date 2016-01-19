@@ -9,7 +9,8 @@ var
 var 
     express = require('express'),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    socket = require('socket.io');
 
 // custom modules
 var 
@@ -56,9 +57,16 @@ app.post( '/login', function(req, res) {
             output.success = false;
             output.err = 'podany login jest juz zajęty'
         }
-        console.log(output);
+        
         res.end(JSON.stringify(output));
     });
 });
 
-app.listen(3000);
+var server = http.createServer(app);
+server.listen(3000);
+
+var io = socket.listen(server);
+
+io.sockets.on('connection', function (socket) {
+    console.log("connected");
+});

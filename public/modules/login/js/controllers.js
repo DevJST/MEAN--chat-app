@@ -5,14 +5,16 @@ angular.module('ChatApp.login.controllers', []).
         $scope.user = {};
         
         $scope.login = function() {
-            if(!$scope.user.login) return;
+            var userLogin = $scope.user.login;
+            if(!userLogin) return;
             
             $http
                 .post('/login', {
-                    userLogin: $scope.user.login
+                    userLogin: userLogin
                 })
                 .success(function(data) {
                     if(data.success) {
+                        localStorage.setItem('userLogin', userLogin);
                         $location.path('/chatRoom');
                     } else {
                         $scope.loginErrorMessage = data.err;

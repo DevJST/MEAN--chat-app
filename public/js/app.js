@@ -9,7 +9,8 @@ angular.module( 'ChatApp' ).config( [ '$routeProvider', function( $routeProvider
             controller: 'LoginController'
         })
         .when( '/chatRoom', {
-            templateUrl: 'modules/chatRoom/partials/chatRoom.html'
+            templateUrl: 'modules/chatRoom/partials/chatRoom.html',
+            controller: 'ChatRooController'
         })
         .otherwise({
             redirectTo:'/join'
