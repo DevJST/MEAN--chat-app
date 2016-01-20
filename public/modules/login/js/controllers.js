@@ -1,26 +1,23 @@
 'use strict'
 
 angular.module('ChatApp.login.controllers', []).
-    controller('LoginController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+    controller('LoginController', ['$scope', '$location', '$http', 'tokenHandlingService', function($scope, $location, $http, tokenHandlingService) {
         $scope.user = {};
         
         $scope.login = function() {
             var userLogin = $scope.user.login;
             if(!userLogin) return;
             
-            $http
-                .post('/login', {
+            $http.post('/login', {
                     userLogin: userLogin
-                })
-                .success(function(data) {
+                }).success(function(data) {
                     if(data.success) {
-                        localStorage.setItem('userLogin', userLogin);
+                        tokenHandlingService.saveToken(data.token);
                         $location.path('/chatRoom');
                     } else {
-                        $scope.loginErrorMessage = data.err;
+                        $scope.loginErrorMessage = data.errMessage;
                     }
-                })
-                .error(function() {
+                }).error(function() {
                     $scope.loginErrorMessage = 'Wewnętrzny błąd servera podczas próby logowania';
                 });
         };

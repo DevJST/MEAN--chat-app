@@ -10,9 +10,12 @@
   "license": "ISC",
   "devDependencies": {
     "body-parser": "^1.14.2",
+    "dotenv": "^1.2.0",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "jsonwebtoken": "^5.5.4",
     "mongoose": "^4.3.5",
-    "socket.io": "^1.4.4"
+    "socket.io": "^1.4.4",
+    "socketio-jwt": "^4.3.4"
   }
 }

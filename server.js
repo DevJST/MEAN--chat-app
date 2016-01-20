@@ -10,15 +10,25 @@ var
     express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
-    socket = require('socket.io');
+    socket = require('socket.io'),
+    dotenv = require('dotenv'),
+    jwt = require('jsonwebtoken'),
+    socketioJwt = require('socketio-jwt');
+    
 
 // custom modules
 var 
+    appRoutes = require('./routes/app-routes'),
     connection = require('./lib/connection'),
     User = mongoose.model('User');
 
+// load .env file
+dotenv.load();
+
+// create express app
 var app = express();
 
+// set root directory for public files
 app.use(express.static('public'));
 
 // parse application/x-www-form-urlencoded
@@ -27,46 +37,27 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// set views folder and view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// app routes
+app.use(appRoutes);
 
-app.get( '/', function(req, res) {
-    res.render('index');
-});
-
-app.post( '/login', function(req, res) {
-    User.find({ nickname: req.body.userLogin }, function(err, user) {
-        if (err) throw err;
-        
-        var output = {};
-        output.success = true;
-        
-        
-        if(!user.length) {
-            var newUser = User({
-                nickname: req.body.userLogin
-            });
-            
-            newUser.save(function(err) {
-                if (err) throw err;
-
-                // output.success = true; - by doing this way, empty object is returned as the response 
-            });
-        } else {
-            output.success = false;
-            output.err = 'podany login jest juz zajęty'
-        }
-        
-        res.end(JSON.stringify(output));
-    });
-});
-
+// create server
 var server = http.createServer(app);
-server.listen(3000);
+server.listen(process.env.SERVER_PORT || 3000, process.env.SERVER_HOST || 'localhost');
 
+// attach socket.io
 var io = socket.listen(server);
 
+// Socket.io auth middleware 
+io.set('authorization', socketioJwt.authorize({
+  secret: process.env.AUTH_SECRET_KEY,
+  handshake: true
+}));
+
+// Socket.io connection event 
 io.sockets.on('connection', function (socket) {
     console.log("connected");
 });

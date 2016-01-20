@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module( 'ChatApp', [ 'ngRoute', 'ChatApp.chatRoom', 'ChatApp.login' ] );
+angular.module( 'ChatApp', [ 'ngRoute', 'angular-jwt', 'ChatApp.services', 'ChatApp.chatRoom', 'ChatApp.login' ] );
 
 angular.module( 'ChatApp' ).config( [ '$routeProvider', function( $routeProvider ) {
     $routeProvider
