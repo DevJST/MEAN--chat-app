@@ -59,5 +59,7 @@ io.set('authorization', socketioJwt.authorize({
 
 // Socket.io connection event 
 io.sockets.on('connection', function (socket) {
-    console.log("connected");
+    socket.on('chat message', function(msg){
+        io.emit('chat message', msg);
+    });
 });
